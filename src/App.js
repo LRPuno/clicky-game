@@ -18,6 +18,11 @@ class App extends Component {
 
 
   removeFriend = id => {
+    if (this.state.girlsPicked.length === 11) {
+      this.setState({
+        answer: "Winner Chicken Dinner"
+      })
+    }
     if (this.state.currentScore >= this.state.highScore) {
       this.setState({
         highScore: this.state.currentScore
@@ -26,33 +31,23 @@ class App extends Component {
 
     const shuffledFriends = this.state.friends.map((a) => [Math.random(),a]).sort((a,b) => a[0]-b[0]).map((a) => a[1]);
 
-    console.log("This is ID: "+ id);
     if (this.state.girlsPicked.includes(id)) {
-      console.log("---------IF(WRONG ANSWER)--------")
       this.setState({
         answer: "Wrong! Click to Play Again!",
         currentScore: 0,
         friends: shuffledFriends,
         girlsPicked: []
       })
-      console.log(this.state.girlsPicked);
-      console.log(shuffledFriends);
-      console.log(this.state.friends);
     }
     else {
-      console.log("---------ELSE(RIGHT ANSWER)--------")
       let newStateArray = this.state.girlsPicked.slice();
       newStateArray.push(id);
-      console.log("This is New Array: "+ newStateArray);
       this.setState({
         answer: "Nice! You Can Memorize!",
         girlsPicked: newStateArray,
         currentScore: this.state.currentScore +1,
         friends: shuffledFriends
       })
-      console.log(this.state.girlsPicked);
-      console.log(shuffledFriends);
-      console.log(this.state.friends);
     }
 
     /*
