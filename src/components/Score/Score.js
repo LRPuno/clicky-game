@@ -6,6 +6,7 @@ import React from "react";
 const Score = props => (
   <div className="row">
     <div className="col-md-12">
+    <p className="card-text">{props.win}</p>
     <p className="card-text">Answer: {props.answer}</p>
       <p className="card-text">Current Score: {props.currentScore}</p>
       <p className="card-text">High Score: {props.highScore}</p>

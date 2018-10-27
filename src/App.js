@@ -10,6 +10,7 @@ class App extends Component {
   // Setting this.state.friends to the friends json array
   state = {
     girlsPicked: [],
+    win: "Game is Playing....",
     friends,
     answer: "Play the Game",
     currentScore: 0,
@@ -18,19 +19,20 @@ class App extends Component {
 
 
   removeFriend = id => {
-    if (this.state.girlsPicked.length === 11) {
+    const shuffledFriends = this.state.friends.map((a) => [Math.random(),a]).sort((a,b) => a[0]-b[0]).map((a) => a[1]);
+    
+    if (this.state.currentScore === 11) {
       this.setState({
-        answer: "Winner Chicken Dinner"
+        win: "Winner Chicken Dinner",
+        currentScore: 0
       })
     }
-    if (this.state.currentScore >= this.state.highScore) {
+    else if (this.state.currentScore >= this.state.highScore) {
       this.setState({
         highScore: this.state.currentScore
       })
     }
-
-    const shuffledFriends = this.state.friends.map((a) => [Math.random(),a]).sort((a,b) => a[0]-b[0]).map((a) => a[1]);
-
+    
     if (this.state.girlsPicked.includes(id)) {
       this.setState({
         answer: "Wrong! Click to Play Again!",
@@ -43,6 +45,7 @@ class App extends Component {
       let newStateArray = this.state.girlsPicked.slice();
       newStateArray.push(id);
       this.setState({
+        win: "Game is Playing....",
         answer: "Nice! You Can Memorize!",
         girlsPicked: newStateArray,
         currentScore: this.state.currentScore +1,
@@ -50,11 +53,6 @@ class App extends Component {
       })
     }
 
-    /*
-    if (this.state.girlsPicked.length === 12) {
-      console.log("You Win Game?....Code it Fool!")
-    }
-    */
 
   };
 
@@ -64,6 +62,7 @@ class App extends Component {
       <Wrapper>
         <Title>Anime Girls ❤</Title>
         <Score
+          win = {this.state.win}
           answer = {this.state.answer}
           currentScore= {this.state.currentScore}
           highScore= {this.state.highScore}
